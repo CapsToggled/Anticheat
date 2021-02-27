@@ -1,0 +1,18 @@
+{
+    private int streak;
+
+    public BadPacketsA(BWP plugin, PlayerData playerData) {
+        super(plugin, playerData);
+    }
+
+    public void handleCheck(Player player, Packet packet) {
+        if (player.getVehicle() == null && packet instanceof PacketPlayInFlying) {
+            if (((PacketPlayInFlying)packet).g()) {
+                this.streak = 0;
+            } else if (++this.streak > 20 && this.alert(AlertType.RELEASE, player, "failed Bad Packets Check A.") && !this.playerData.isBanning()) {
+                this.ban(player, "Bad Packets Check A");
+            }
+        }
+
+    }
+}
